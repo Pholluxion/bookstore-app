@@ -23,4 +23,10 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
+
+var {swaggerDocs: reviewsSwaggerDocs} = require("./swagger");
+app.listen(port, () => {
+    reviewsSwaggerDocs(app, port);
+});
+
 console.log("Server start in port localhost:",port);
