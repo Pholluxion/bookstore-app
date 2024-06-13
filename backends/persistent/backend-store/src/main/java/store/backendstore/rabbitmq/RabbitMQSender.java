@@ -1,27 +1,37 @@
 package store.backendstore.rabbitmq;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class RabbitMQSender {
 
-	@Autowired
-	private AmqpTemplate rabbitTemplate;
 
+	/// The rabbit template
+	private final AmqpTemplate rabbitTemplate;
+
+	/// Constructor injection
+	RabbitMQSender(AmqpTemplate rabbitTemplate) {
+		this.rabbitTemplate = rabbitTemplate;
+	}
+
+	/// The exchange
 	@Value("${javainuse.rabbitmq.exchange}")
 	private String exchange;
 
+	/// The routing key
 	@Value("${javainuse.rabbitmq.routingkey}")
 	private String routingkey;
 
+	/// Send a message to the queue
 	public boolean send(Object company) {
 		try {
-			System.out.println("Message ton send >>>>>>>> " + company);
+			log.info("Message ton send >>>>>>>> " + company.toString());
 			rabbitTemplate.convertAndSend(exchange, routingkey, company);
-			System.out.println("Send msg =" + company);
+			log.info("Send msg =" + company);
 			return true;
 		} catch (Exception e) {
 			return false;
