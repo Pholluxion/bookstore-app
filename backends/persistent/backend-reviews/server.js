@@ -10,6 +10,7 @@ var http = require('http');
  */
 
 var port = process.env.PORT || '3000';
+var portDocs = process.env.PORT || '3001';
 app.set('port', port);
 
 /**
@@ -24,9 +25,9 @@ var server = http.createServer(app);
 
 server.listen(port);
 
-var {swaggerDocs: reviewsSwaggerDocs} = require("./swagger");
-app.listen(port, () => {
-    reviewsSwaggerDocs(app, port);
+var {swaggerJSDocs: reviewsSwaggerDocs} = require("./swagger");
+app.listen(portDocs, () => {
+    reviewsSwaggerDocs(app, portDocs);
 });
 
 console.log("Server start in port localhost:",port);
