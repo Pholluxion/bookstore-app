@@ -28,4 +28,9 @@ moongose.connect(uri_mongodb, null, (err) => {
 var reseñaRouter = require('./routes/reviews');
 app.use('/', reseñaRouter);
 
+var {swaggerJSDocs: reviewsSwaggerDocs} = require("./swagger");
+app.listen( () => {
+    reviewsSwaggerDocs(app);
+});
+
 module.exports = app;

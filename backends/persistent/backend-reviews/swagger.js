@@ -7,13 +7,13 @@ const options = {
         openapi: "3.0.0",
         info: { title: 'backend-reviews', version: '0.0.0'}
     },
-    apis: ['routes/reviews.js'],
+    apis: ['./routes/reviews.js'],
 };
 
 // Documentacion en formato JSON
 const swaggerSpec = swaggerJSDoc(options);
 
-const swaggerJSDocs = (app, port) => {
+const swaggerJSDocs = (app) => {
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.get('/docs.json', (req, res) => {
         res.setHeader('Content-Type', 'application/jsaon');
