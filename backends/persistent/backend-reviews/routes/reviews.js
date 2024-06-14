@@ -38,6 +38,7 @@ var router = express.Router();
  * /reviews:
  *  get:
  *    summary: Returns the list of all reviews
+ *    tags: [Review]
  *    responses:
  *      200:
  *        description: The list of all reviews
@@ -47,12 +48,63 @@ var router = express.Router();
  *              type: array
  *              items:
  *                $ref: '#components/schemas/Review'
+ *      400:
+ *        description: Bad Request
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
  */
+
 router.get('/reviews', async function (req, res, next) {
   console.log("-> request /reviews")
   var docs = await reviewsModel.find({})
   res.json(docs);
 });
+
+
+
+/**
+ * @swagger
+ * /addreviews:
+ *  post:
+ *    summary: Creates a review
+ *    tags: [Review]
+ *    parameters:
+ *      - in: query
+ *        name: usuario
+ *        schema:
+ *          type: string
+ *          required: true
+ *        description: Username of who submitted the review
+ *      - in: query
+ *        name: isbn
+ *        schema:
+ *          type: string
+ *          required: true
+ *        description: The book's ISBN
+ *      - in: query
+ *        name: estrellas
+ *        schema:
+ *          type: number
+ *          required: true
+ *        description: Star rating of the reviewed book
+ *      - in: query
+ *        name: comentario
+ *        schema:
+ *          type: string
+ *          required: true
+ *        description: The review's comment
+ *    responses:
+ *      201:
+ *        description: Created review
+ *      409:
+ *        description: Conflict
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
 
 /* POST users listing. */
 router.post('/addreviews', async function (req, res, next) {
@@ -71,6 +123,37 @@ router.post('/addreviews', async function (req, res, next) {
   }
 });
 
+
+/**
+ * @swagger
+ * /deletereviews:
+ *  delete:
+ *    summary: Deletes a review
+ *    tags: [Review]
+ *    parameters:
+ *      - in: query
+ *        name: usuario
+ *        schema:
+ *          type: string
+ *          required: true
+ *        description: Username of who submitted the review
+ *      - in: query
+ *        name: isbn
+ *        schema:
+ *          type: string
+ *          required: true
+ *        description: The book's ISBN
+ *    responses:
+ *      200:
+ *        description: Deleted review
+ *      409:
+ *        description: Conflict
+ *      404:
+ *        description: Not Found
+ *      500:
+ *        description: Server Error
+ */
+
 /* DELETE users listing. */
 router.delete('/deletereviews', async function (req, res, next) {
   var doc = await reviewsModel.findOne({ isbn: req.query.isbn, usuario: req.query.usuario });
@@ -83,7 +166,5 @@ router.delete('/deletereviews', async function (req, res, next) {
       .catch((err) => { console.error(err); res.json({ error: err }); });
   }
 });
-
-
 
 module.exports = router;

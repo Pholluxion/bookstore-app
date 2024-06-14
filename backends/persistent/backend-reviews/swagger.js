@@ -5,7 +5,11 @@ const swaggerUi = require("swagger-ui-express");
 const options = {
     definition: {
         openapi: "3.0.0",
-        info: { title: 'backend-reviews', version: '0.0.0'}
+        info: { 
+            title: 'backend-reviews',
+            description: 'API documentation for the Reviews backend.',
+            version: '0.0.0'
+        }
     },
     apis: ['./routes/reviews.js'],
 };

@@ -161,7 +161,6 @@ reviewsModel.deleteMany({}).then((res) => {
 
 reviewsModel.insertMany(InitialReviews).then((res) => {
     console.log("=> Insercion de los datos completa");
-    moongose.connection.close();
  }).catch((err) => console.log(err));
 
 var reseñaRouter = require('./routes/reviews');
