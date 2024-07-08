@@ -20,7 +20,7 @@ const swaggerSpec = swaggerJSDoc(options);
 const swaggerJSDocs = (app) => {
     app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.get('/docs.json', (req, res) => {
-        res.setHeader('Content-Type', 'application/jsaon');
+        res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec)
     })
 }
